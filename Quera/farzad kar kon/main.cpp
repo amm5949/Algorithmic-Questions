@@ -1,27 +1,43 @@
 // C++ program to compute sum of
 // subarray elements
+// I am gonna use Kadane's algorithm 
+// the link: https://cyberw1ng.medium.com/kadanes-algorithm-the-efficient-way-to-find-maximum-subarray-sum-2023-f67b42236bde
 #include <bits/stdc++.h>
 using namespace std;
 
 // function compute sum all sub-array
-long int SubArraySum(int arr[], int n)
+int SubArraySum(int arr[], int n)
 {
-	long int result = 0;
+	int max_so_far = 0;
+	int max_ending_here = 0;
 
 	// computing sum of subarray using formula
-	for (int i = 0; i < n; i++)
-		result += (arr[i] * (i + 1) * (n - i));
+	for (int i = 0; i < n; i++) {
+		max_ending_here += arr[i];
+
+		if (max_ending_here < 0) {
+			max_ending_here = 0;
+		}
+
+		if (max_so_far < max_ending_here) {
+			max_so_far = max_ending_here;
+		}
+	}
 
 	// return all subarray sum
-	return result;
+	return max_so_far;
 }
 
-// Driver code
+
 int main()
 {
-	int arr[] = { 7, -1, -2, 1, 5, -11, 9, 1, 4, -1, 3, -10 };
-	int n = sizeof(arr) / sizeof(arr[0]);
-	cout << "Sum of SubArray : " << SubArraySum(arr, n)
-		<< endl;
+	int n;
+	int arr[100]; 
+	cin >> n;
+	for (int i = 0; i < n; i++) {
+		cin >> arr[i];
+	}
+	cout << SubArraySum(arr, n) << endl;
+
 	return 0;
 }
